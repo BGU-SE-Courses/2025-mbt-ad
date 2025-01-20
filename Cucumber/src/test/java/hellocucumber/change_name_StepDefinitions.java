@@ -1,20 +1,14 @@
 package hellocucumber;
 
 import io.cucumber.java.en.*;
+import org.junit.After;
 
-import org.junit.Before;
-import org.junit.jupiter.api.Assertions.*;
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
 public class change_name_StepDefinitions {
 
-    private static List<OpenCartActuator> allOpenCarts;
+//    private static List<OpenCartActuator> allOpenCarts;
     private static OpenCartActuator opencartUser;
 
     private static List<OpenCartActuator> allopenCarts;
@@ -51,18 +45,18 @@ public class change_name_StepDefinitions {
     }
 
     @When("User is logged in with {string} and {string}")
-    public void user_is_logged_in_with_and(String email, String password) {
+    public void user_is_logged_in_with(String email, String password) {
         opencartUser.goToLogin();
         opencartUser.enterLoginInfo(email, password);
     }
 
 
-    @And("User clicks on the Edit Account button")
+    @And("User clicks on the 'Edit Account' button")
     public void user_click_Edit_Account_button(){
         opencartUser.Click_Edit_Account_button();
     }
 
-    @When("User enters a new name {string}")
+    @When("User enters a new first name {string}")
     public void user_Enter_new_First_Name(String new_name){
         opencartUser.writeNewFirstName(new_name);
     }
@@ -77,11 +71,52 @@ public class change_name_StepDefinitions {
         opencartUser.checkIfConfirmationMessageOnAccountUpdated();
     }
 
-    @And("the user should see {string} in the profile information")
-    public void name_updated_successfully(String new_name) {
+    @And("the user should see the updated first name {string} in their Account Information")
+    public void first_name_updated_successfully(String new_name) {
         opencartUser.Click_Edit_Account_button();
         opencartUser.CheckIfFirstNameChange(new_name);
-
     }
+    //+++++++++++++++++++++++++++++++++++++++++++++++++new
+
+    @Then("an informative error message about the length of the name is displayed")
+    public void verifyErrorMessageForNameLength() {
+        opencartUser.checkIfErrorMessageForNameLengthIsDisplayed();
+    }
+
+    @And("the user's name should remain unchanged and not change to {string}")
+    public void verifyUserNameRemainsUnchanged(String wrong_name) {
+        opencartUser.Click_Edit_Account_button();
+        opencartUser.CheckIfFirstNameUnchanged(wrong_name);
+    }
+    @And("User clicks on the 'Edit your account information' button")
+    public void user_click_Edit_your_account_information_button(){
+        opencartUser.Click_your_account_information_button();
+    }
+
+    @When("User logs out")
+    public void User_logs_out(){
+        opencartUser.logeOut();
+    }
+
+    @And("User logs in again with {string} and {string}")
+    public void User_logs_in_again(String email, String password) {
+        user_is_logged_in_with(email, password);
+    }
+
+    @When("User enters a new last name {string}")
+    public void user_Enter_new_Last_Name(String new_name){
+        opencartUser.writeNewLastName(new_name);
+    }
+    @And("the user should see the updated last name {string} in their Account Information")
+    public void last_name_updated_successfully(String new_name) {
+        opencartUser.Click_Edit_Account_button();
+        opencartUser.CheckIfLastNameChange(new_name);
+    }
+    @When("User doesn't change their name and saves the changes in their Account Information")
+    public void save_without_change(){
+        User_saves_changes_in_Account_Information();
+    }
+
 }
+
 
