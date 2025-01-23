@@ -2,31 +2,29 @@
 This is a repository for the system-testing assignment of the Software Quality Engineering course at the [Ben-Gurion University](https://in.bgu.ac.il/), Israel.
 
 ## Assignment Description
-In this assignment, we tested an open-source software called [$$*TODO* software name$$](https://address-of-the-project.com).
+In this assignment, we tested an open-source software called [Opencart](https://address-of-the-project.com).
 
-$$*TODO* Add some general description about the software$$
-
-## Installation
-$$*TODO* Write instructions on how to install the software and prepare the testing environment$$
+OpenCart is a simple and flexible open-source platform for creating and managing online stores. Users can register on the site to organize products, interact with customers, and handle payments, all through an easy-to-use interface.
 
 ## What we tested
-$$*TODO* Add a description of the module and the user stories that you chose to test.
-For example, in the case of the Moodle example, you can write something like this:
+We tested the User Account Management and Administrative Control features, focusing on two main use cases.
 
-We tested the quiz module that allows for creating and taking quizzes. We chose to test the following user stories: 
+*User story:* User tries to change first name in their account information.
 
-*User story:* A teacher adds a new quiz to the course with two yes/no questions
+*Preconditions:* The user has an existing account and is logged in.
+The user navigates to the "My Account Information" page.
 
-*Preconditions:* There is a course with a teacher
+*Expected outcome:* A confirmation message is displayed.
+The updated first name appears in the user’s account information.
 
-*Expected outcome:* The quiz is added to the course.
+*User story:* An admin deactivates a specific user from the Customers List.
 
-*User story:* A students attempts a quiz and answers correctly.
+*Preconditions:*
+The admin has valid credentials to access the admin interface.
+The user to be deactivated exists in the Customers List.
 
-*Preconditions:* There is a course with a quiz with two yes/no questions and the quiz grade is calculated automatically and the grade is visible to the students upon submission.
+*Expected outcome:* The user's account status is updated to "disabled" in the Customers List.
 
-*Expected outcome:* The student receives 100.
-$$
 
 ## How we tested
 We used two different testing methods:
@@ -34,9 +32,6 @@ We used two different testing methods:
 2. [Provengo](https://provengo.tech/), a story-based testing framework.
 
 Each of the testing methods is elaborated in its own directory. 
-
-## Results
-Update all README.md files (except for d-e, see Section 1). Specifically, replace all $$*TODO*…$$ according to the instructions inside the $$.
 
 ## Detected Bugs
 We detected the following bugs:

@@ -24,7 +24,7 @@ Feature: User Account Management and Administrative Control
     Then  when search User with email "<Useremail>" , it should be disabled
     Examples:
       | AdminName            | AdminPassword     | Useremail                |
-      | MaorLivni                | 1234              | maorlivni050@gmail.com          |
+      | MaorLivni                | 1234              | maorlivni050@gmail.com |
 
 
 #    Given User is registered with "<Useremail>" and "<UserPassword>"
