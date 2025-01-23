@@ -40,8 +40,6 @@ public class OpenCartActuator{
         // maximize the window - some web apps look different in different sizes
         driver.manage().window().setPosition(new Point(700, 5));
 
-
-
         /*
             If we wanted to test the web application on different devices -
                 1. Open the web app

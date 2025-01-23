@@ -26,6 +26,3 @@ Feature: User Account Management and Administrative Control
       | AdminName            | AdminPassword     | Useremail                |
       | MaorLivni                | 1234              | maorlivni050@gmail.com |
 
-
-#    Given User is registered with "<Useremail>" and "<UserPassword>"
-#    And   Admin is logged in with "<AdminName>" and "<AdminPassword>"
