@@ -23,17 +23,12 @@ public class OpenCartActuator{
     public static WebDriver driver;
     private static WebDriverWait wait;
 
-    int numberinCart;
-
-
-
-
     public void initSessionAsUser(String webDriver, String path){
         // webDriver = "webdriver.chrome.driver"
         System.setProperty(webDriver, path);
 
         // new chrome driver object
-        this.driver = new ChromeDriver();
+        driver = new ChromeDriver();
 
         // new web driver wait -> waits until element are loaded (40 sec max)
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(40));
@@ -44,8 +39,6 @@ public class OpenCartActuator{
 
         // maximize the window - some web apps look different in different sizes
         driver.manage().window().setPosition(new Point(700, 5));
-
-
 
         /*
             If we wanted to test the web application on different devices -
@@ -235,88 +228,56 @@ public class OpenCartActuator{
         assertEquals(newName, actualName, "The user last name is incorrect.");
     }
 
-//====================================================================================================
+    public void navigateToUserRegisterPage() throws InterruptedException {
+        // Navigate to the OpenCart website
+        WebElement MyAccountButton= driver.findElement(By.xpath("//li[2]/div[1]/a[1]/span[1]"));
+        MyAccountButton.click();
+        Thread.sleep(1000);
+        WebElement RegisterButton= driver.findElement(By.xpath("//li[2]/div[1]/ul[1]/li[1]/a[1]"));
+        RegisterButton.click();
 
-    public void AddProductiMac() {
-        /**
-         * Adds a product named "iMac" to the shopping cart on an e-commerce website.
-         *
-         * This method performs several actions on a web page using Selenium WebDriver:
-         * 1. Waits for and fills in the search box with "iMac".
-         * 2. Clicks the search button to perform the search.
-         * 3. Selects the first iMac product from the product list.
-         * 4. Retrieves the number of items in the cart from the cart's button text.
-         * 5. Parses this number and prints it.
-         * 6. Finally, clicks the 'Add to Cart' button for the selected product.
-         *
-         * During execution, the method handles a brief pause to ensure the webpage processes the cart update.
-         *
-         * Note: This method is tailored for a specific website layout and might not work as intended on other sites.
-         *
-         * @throws InterruptedException If the Thread.sleep is interrupted.
-         */
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[2]/div[1]/input[1]"))).sendKeys("iMac");
-        driver.findElement(By.xpath("//*[@id='search']/button[1]")).click();
-        driver.findElement(By.xpath("//*[@id='product-list']/div/div/div/a/img[1]")).click();
-        WebElement wishlist = driver.findElement(By.xpath("//*[@id='header-cart']/div[1]/button[1]"));
-        // Retrieve the text of the element
-        String fullText = wishlist.getText();
-        System.out.println(fullText);
-        // Define a regex pattern to extract the number
-        Pattern pattern = Pattern.compile("(\\d+)");
-        Matcher matcher = pattern.matcher(fullText);
-        if (matcher.find()) {
-            numberinCart = Integer.parseInt(matcher.group(1));
-            System.out.println("Number found: " + numberinCart);
-        } else {
-            System.out.println("No number found in the text");
-        }
-        driver.findElement(By.xpath("//*[@id='button-cart']")).click();
+    }
 
+    //Log In as User
+    public void registerUser( String email, String password) throws InterruptedException {
+        driver.get("http://localhost/opencartsite/");
+        Thread.sleep(1000);
+        // Fill in registration details
+        WebElement firstNameElement = driver.findElement(By.xpath("//*[@id='input-firstname']"));
+        firstNameElement.sendKeys("firstname");
+        WebElement lastNameElement = driver.findElement(By.xpath("//*[@id='input-lastname']"));
+        lastNameElement.sendKeys("lastname");
+        WebElement emailElement = driver.findElement(By.xpath("//*[@id='input-email']"));
+        emailElement.sendKeys(email);
+        WebElement passwordElement = driver.findElement(By.xpath("//*[@id='input-password']"));
+        passwordElement.sendKeys(password);
+        Thread.sleep(1000);
+        // Scroll down to the "Agree" checkbox
+        ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, document.body.scrollHeight);");
+
+        // Wait for a moment
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
-    @Test
-    public void CheckProductAdded(int txt) {
-        /**
-         * Verifies if a product is successfully added to the shopping cart.
-         *
-         * This code snippet is part of a method that performs the following actions:
-         * 1. Locates a web element 'wishlist' representing the cart button using its XPath.
-         * 2. Retrieves the text of this element, which includes the current number of items in the cart.
-         * 3. Uses a regular expression to extract the first sequence of digits (assumed to be the item count) from this text.
-         * 4. Parses the extracted string into an integer.
-         * 5. Asserts that this number is equal to the expected number of items in the cart (numberinCart + 1).
-         *
-         * Steps:
-         * - The XPath used to locate the 'wishlist' element is specific to the structure of the web page.
-         * - The regex pattern "(\\d+)" matches the first sequence of digits in the text.
-         * - The assertion checks if the product count in the cart has increased by one after adding a product.
-         *
-         * If no number is found in the text, a message is printed to the console.
-         *
-         * @param numberinCart The expected number of items in the cart before adding the new product.
-         * @throws AssertionError If the actual number of items in the cart does not match the expected number.
-         */
-        WebElement wishlist = driver.findElement(By.xpath("//*[@id='header-cart']/div[1]/button[1]"));
-        // Retrieve the text of the element
-        String Text = wishlist.getText();
-        System.out.println(Text);
-        // Define a regex pattern to extract the number
-        Pattern pattern = Pattern.compile("(\\d+)");
-        Matcher matcher = pattern.matcher(Text);
-        if (matcher.find()) {
-            String numberString = matcher.group(1);
-            int number = Integer.parseInt(numberString);
-            assertEquals(number, numberinCart+1, "The product did not added to the cart");
-        } else {
-            System.out.println("No number found in the text");
+
+        // Click the "Agree" checkbox
+        WebElement agreeCheckbox = driver.findElement(By.xpath("//*[@name='agree']"));
+        agreeCheckbox.click();
+
+        // Wait for a few seconds to observe the actions
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+        WebElement continueClick = driver.findElement(By.xpath("//body/main[1]/div[2]/div[1]/div[1]/form[1]/div[1]/button[1]"));
+        continueClick.click();
     }
-
-
+    public void closeBrowser() {
+        // Close the browser
+        driver.quit();
+    }
 
 }
