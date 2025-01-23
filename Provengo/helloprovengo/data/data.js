@@ -42,8 +42,6 @@ const xpaths = {
     ContinueButton: "//div[2]/button[1]",
     successMessage: "//div[contains(@class, 'alert alert-success alert-dismissible')]"
   }
-
 }
-
 
 const searchTerm = 'pizza'
