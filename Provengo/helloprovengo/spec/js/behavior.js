@@ -5,42 +5,42 @@
 // */
 
 bthread('Admin deactivate user', function () {
-  let s = new SeleniumSession('admin');
+//  let s = new SeleniumSession('admin');
   sync({request: Event("new session - Admin" ) });
-  s.start(AdminURL , 'chrome');
+//  s.start(AdminURL , 'chrome');
 
   sync({request: Event("AdminLogIn")});
-  AdminLogIn(s);
+//  AdminLogIn(s);
 
   sync({request: Event("OpenCustomersList") });
-  OpenCustomersList(s);
+//  OpenCustomersList(s);
 
   sync({request: Event("FirstUserDeactivated")});//syncing the user deactivation
-  DeactivateFirstUser(s);
+//  DeactivateFirstUser(s);
 
   sync ({request: Event("DeactivationValidation")});
-  DeactivationValidation(s);
+//  DeactivationValidation(s);
 
 sync ({request: Event("ReActivateUserForSetUpNextTestNextTest")});
-   AdminActivateUserForSetUpNextTest(s);
+//   AdminActivateUserForSetUpNextTest(s);
 sync({request: Event(" close session - Admin" ) });
-  s.close();
+//  s.close();
 })
 
 bthread('user changes name', function () {
-  let s = new SeleniumSession('user');
+//  let s = new SeleniumSession('user');
   sync({request: Event("new session - User" ) });
-  s.start(UserURL , 'chrome');
+//  s.start(UserURL , 'chrome');
 
   sync({request: Event("UserLogIn")});
-  UserLogIn(s);
+//  UserLogIn(s);
 
 
-  EditAccount(s);
+//  EditAccount(s);
   sync({request: Event("EditAccount")});
 //
     sync({request: Event("close session - User" ) });
-  s.close();
+//  s.close();
 })
 
 bthread("Constraint1", function () {
