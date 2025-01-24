@@ -1,18 +1,30 @@
 // @provengo summon ctrl
 
-/**
- * List of events "of interest" that we want test suites to cover.
- */
-const GOALS = [
-    any(/Howdy/),
-    any(/Mars/),
-    Ctrl.markEvent("Classic!")
+const EVENTS_OF_INTEREST = [
+    "new session - Admin",
+    "AdminLogIn",
+    "OpenCustomersList",
+    "FirstUserDeactivated",
+    "DeactivationValidation",
+    "close session - Admin",
+    "new session - User",
+    "UserLogIn",
+    "EditAccount",
+    "close session - User"
 ];
 
+
+
+const GOALS = EVENTS_OF_INTEREST.map(event => Ctrl.markEvent(event));
+
 const makeGoals = function(){
-    return [ [ any(/Howdy/), any(/Venus/) ],
-             [ any(/Mars/) ],
-             [ Ctrl.markEvent("Classic!") ] ];
+    const pairs = [];
+    for (let i = 0; i < EVENTS_OF_INTEREST.length; i++) {
+        for (let j = i + 1; j < EVENTS_OF_INTEREST.length; j++) {
+            pairs.push([Ctrl.markEvent(EVENTS_OF_INTEREST[i]), Ctrl.markEvent(EVENTS_OF_INTEREST[j])]);
+        }
+    }
+    return pairs;
 }
 
 /**
@@ -25,25 +37,18 @@ const makeGoals = function(){
  * @returns Number of events from GOALS that have been met.
  */
 function rankByMetGoals( ensemble ) {
-    const unreachedGoals = [];
-    for ( let idx=0; idx<GOALS.length; idx++ ) {
-        unreachedGoals.push(GOALS[idx]);
-    }
-
+    const unreachedGoals = makeGoals();
     for (let testIdx = 0; testIdx < ensemble.length; testIdx++) {
-        let test = ensemble[testIdx];
-        for (let eventIdx = 0; eventIdx < test.length; eventIdx++) {
-            let event = test[eventIdx];
-            for (let ugIdx=unreachedGoals.length-1; ugIdx >=0; ugIdx--) {
-                let unreachedGoal = unreachedGoals[ugIdx];
-                if ( unreachedGoal.contains(event) ) {
-                    unreachedGoals.splice(ugIdx,1);
-                }
+        const test = ensemble[testIdx];
+        for (let ugIdx = unreachedGoals.length - 1; ugIdx >= 0; ugIdx--) {
+            const [goal1, goal2] = unreachedGoals[ugIdx];
+            if (test.includes(goal1) && test.includes(goal2)) {
+                unreachedGoals.splice(ugIdx, 1);
             }
         }
     }
+    return makeGoals().length - unreachedGoals.length;
 
-    return GOALS.length-unreachedGoals.length;
 }
 
 /**
@@ -58,13 +63,13 @@ function rankByMetGoals( ensemble ) {
  * @param {Event[][]} ensemble the test suite/ensemble to be ranked
  * @returns the percentage of goals covered by `ensemble`.
  */
- function rankingFunction(ensemble) {
-    
-    // How many goals did `ensemble` hit?
+function rankingFunction(ensemble) {
     const metGoalsCount = rankByMetGoals(ensemble);
-    // What percentage of the goals did `ensemble` cover?
-    const metGoalsPercent = metGoalsCount/GOALS.length;
-
-    return metGoalsPercent * 100; // convert to human-readable percentage
+    const totalGoals = makeGoals().length;
+    return (metGoalsCount / totalGoals) * 100; // Human-readable percentage
 }
 
+// Constraints to block specific event sequences
+bthread("Constraint1", function () {
+    sync({ waitFor: Event("EditAccount"), block: Event("FirstUserDeactivated") });
+});
