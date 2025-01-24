@@ -29,7 +29,7 @@ provengo analyze -f PDF helloprovengo
 provengo run --show-sessions helloprovengo
 ```
 5. We repeated steps 1-4 until we were satisfied with the result.
-6. We recorded a video of the running tests and added it to the report. Since more than one browser session was opened, we recorded the entire screen. The link for the video is [here]($$*TODO* write the link$$).
+6. We recorded a video of the running tests and added it to the report. Since more than one browser session was opened, we recorded the entire screen. The link for the video is https://drive.google.com/file/d/1i6mWAbnqu8ScerL6FLF16QW4vD56nnvU/view?usp=sharing.
 7. We copied the generated graph of the model to a file named [model.pdf](submission-files/model.pdf) inside the submission-files directory.
 
 ### Test files

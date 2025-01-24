@@ -34,8 +34,24 @@ function DeactivationValidation(session) {
 with(session) {
 click(xpaths.AdminDashboard.ToListCustomers);
 assertText(xpaths.UserDeactivation.successMessage, "Disabled");
+ Ctrl.doSleep(2000);
 }
 }
+
+function AdminActivateUserForSetUpNextTest(session) {
+with(session) {
+//if(xpaths.UserDeactivation.successMessage == "Disabled"){
+
+  click(xpaths.UserDeactivation.editFirst);
+  scrollToBottom();
+  Ctrl.doSleep(2000);
+  click(xpaths.UserDeactivation.ChangeStatus);
+  scrollToTop();
+  Ctrl.doSleep(2000);
+  click(xpaths.UserDeactivation.saveButton);
+}
+}
+
 
 
 function UserLogIn(session) {
@@ -61,4 +77,5 @@ with(session) {
   assertText(xpaths.UserAccount.successMessage, "Success: Your account has been successfully updated.");
 }
 }
+
 
