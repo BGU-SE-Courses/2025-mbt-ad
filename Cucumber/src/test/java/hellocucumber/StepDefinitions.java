@@ -1,155 +1,24 @@
-//package hellocucumber;
-//
-//import io.cucumber.java.en.*;
-//import org.junit.After;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//public class change_name_StepDefinitions {
-//
-////    private static List<OpenCartActuator> allOpenCarts;
-//    private static OpenCartActuator opencartUser;
-//
-//    private static List<OpenCartActuator> allopenCarts;
-//
-//    private String webDriver = "webdriver.chrome.driver";
-//    private String path = "C:\\Users\\מאור לבני\\Desktop\\לימודים\\שנה ג\\הנדסת איכות תוכנה\\chromedriver-win64\\chromedriver.exe";
-//
-//
-//
-//
-//    public void OpenCartInitUser() {
-//        System.out.println("--------------- INITIALIZING MOODLE TEST - OPENING WEBPAGE ---------------");
-//        if(allopenCarts == null){
-//            allopenCarts = new ArrayList<>();
-//        }
-//        opencartUser = new OpenCartActuator();
-//        allopenCarts.add(opencartUser);
-//        opencartUser.initSessionAsUser(webDriver, path);
-//    }
-//
-//    @Given("User opens the website")
-//    public void userIsOnHomePage() {
-//        OpenCartInitUser();
-//
-//    }
-//
-//
-//    @And("user add a product to cart")
-//    public void userAddAProductToCart() {
-//        opencartUser.AddProductiMac();
-//    }
-//
-//    @Then("the product successfully added to the cart")
-//    public void theProductSuccessfullyAdded() {
-//        opencartUser.CheckProductAdded(1);
-//    }
-//
-//    @When("User is logged in with {string} and {string}")
-//    public void user_is_logged_in_with(String email, String password) {
-//        opencartUser.goToLogin();
-//        opencartUser.enterLoginInfo(email, password);
-//    }
-//
-//
-//    @And("User clicks on the 'Edit Account' button")
-//    public void user_click_Edit_Account_button(){
-//        opencartUser.Click_Edit_Account_button();
-//    }
-//
-//    @When("User enters a new first name {string}")
-//    public void user_Enter_new_First_Name(String new_name){
-//        opencartUser.writeNewFirstName(new_name);
-//    }
-//
-//    @And("User saves the changes in their Account Information")
-//    public void User_saves_changes_in_Account_Information(){
-//        opencartUser.submitChangesInAccountInformation();
-//    }
-//
-//    @Then("a confirmation message is displayed")
-//    public void checkConfirmationMessageOnAccountUpdate() {
-//        opencartUser.checkIfConfirmationMessageOnAccountUpdated();
-//    }
-//
-//    @And("the user should see the updated first name {string} in their Account Information")
-//    public void first_name_updated_successfully(String new_name) {
-//        opencartUser.Click_Edit_Account_button();
-//        opencartUser.CheckIfFirstNameChange(new_name);
-//    }
-//    //+++++++++++++++++++++++++++++++++++++++++++++++++new
-//
-//    @Then("an informative error message about the length of the name is displayed")
-//    public void verifyErrorMessageForNameLength() {
-//        opencartUser.checkIfErrorMessageForNameLengthIsDisplayed();
-//    }
-//
-//    @And("the user's name should remain unchanged and not change to {string}")
-//    public void verifyUserNameRemainsUnchanged(String wrong_name) {
-//        opencartUser.Click_Edit_Account_button();
-//        opencartUser.CheckIfFirstNameUnchanged(wrong_name);
-//    }
-//    @And("User clicks on the 'Edit your account information' button")
-//    public void user_click_Edit_your_account_information_button(){
-//        opencartUser.Click_your_account_information_button();
-//    }
-//
-//    @When("User logs out")
-//    public void User_logs_out(){
-//        opencartUser.logeOut();
-//    }
-//
-//    @And("User logs in again with {string} and {string}")
-//    public void User_logs_in_again(String email, String password) {
-//        user_is_logged_in_with(email, password);
-//    }
-//
-//    @When("User enters a new last name {string}")
-//    public void user_Enter_new_Last_Name(String new_name){
-//        opencartUser.writeNewLastName(new_name);
-//    }
-//    @And("the user should see the updated last name {string} in their Account Information")
-//    public void last_name_updated_successfully(String new_name) {
-//        opencartUser.Click_Edit_Account_button();
-//        opencartUser.CheckIfLastNameChange(new_name);
-//    }
-//    @When("User doesn't change their name and saves the changes in their Account Information")
-//    public void save_without_change(){
-//        User_saves_changes_in_Account_Information();
-//    }
-//
-//}
-//
-//
-
-
-
-//================================================================================================
 package hellocucumber;
 
 import io.cucumber.java.en.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class StepDefinitions {
 
-
     private static OpenCartActuator opencartUser;
-
     private static List<OpenCartActuator> allopenCarts;
-
     private String webDriver = "webdriver.chrome.driver";
     private String path = "C:\\Users\\מאור לבני\\Desktop\\לימודים\\שנה ג\\הנדסת איכות תוכנה\\chromedriver-win64\\chromedriver.exe";
+    private static OpenCartAdminActuator adminActuator;
 
-    private static OpenCartAdminActuator adminActuator ;
-
-
-
+    /**
+     * Initializes a user session for OpenCart and adds it to the list of sessions.
+     * Opens the browser and navigates to the OpenCart user interface.
+     */
     public void OpenCartInitUser() {
         System.out.println("--------------- INITIALIZING MOODLE TEST - OPENING WEBPAGE ---------------");
-        if(allopenCarts == null){
+        if (allopenCarts == null) {
             allopenCarts = new ArrayList<>();
         }
         opencartUser = new OpenCartActuator();
@@ -157,105 +26,96 @@ public class StepDefinitions {
         opencartUser.initSessionAsUser(webDriver, path);
     }
 
+    /**
+     * Step definition: Initializes the user session when the user opens the website.
+     */
     @Given("User opens the website")
     public void userIsOnHomePage() {
         OpenCartInitUser();
-
     }
 
-
-
+    /**
+     * Step definition: Logs the user into the OpenCart website with the given email and password.
+     *
+     * @param email    The email address of the user.
+     * @param password The password of the user.
+     */
     @When("User is logged in with {string} and {string}")
     public void user_is_logged_in_with(String email, String password) {
         opencartUser.goToLogin();
         opencartUser.enterLoginInfo(email, password);
     }
 
-
+    /**
+     * Step definition: Simulates clicking the 'Edit Account' button in the user's account settings.
+     */
     @And("User clicks on the 'Edit Account' button")
-    public void user_click_Edit_Account_button(){
+    public void user_click_Edit_Account_button() {
         opencartUser.Click_Edit_Account_button();
     }
 
+    /**
+     * Step definition: Updates the user's first name with the provided new name.
+     *
+     * @param new_name The new first name for the user.
+     */
     @When("User enters a new first name {string}")
-    public void user_Enter_new_First_Name(String new_name){
+    public void user_Enter_new_First_Name(String new_name) {
         opencartUser.writeNewFirstName(new_name);
     }
 
+    /**
+     * Step definition: Saves the changes in the user's account information.
+     */
     @And("User saves the changes in their Account Information")
-    public void User_saves_changes_in_Account_Information(){
+    public void User_saves_changes_in_Account_Information() {
         opencartUser.submitChangesInAccountInformation();
     }
 
+    /**
+     * Step definition: Checks if a confirmation message is displayed after updating account information.
+     */
     @Then("a confirmation message is displayed")
     public void checkConfirmationMessageOnAccountUpdate() {
         opencartUser.checkIfConfirmationMessageOnAccountUpdated();
     }
 
+    /**
+     * Step definition: Verifies that the updated first name is reflected in the user's account information.
+     *
+     * @param new_name The updated first name to verify.
+     */
     @And("the user should see the updated first name {string} in their Account Information")
     public void first_name_updated_successfully(String new_name) {
         opencartUser.Click_Edit_Account_button();
         opencartUser.CheckIfFirstNameChange(new_name);
-        closeBrowser();
-    }
-    //+++++++++++++++++++++++++++++++++++++++++++++++++new
-
-    @Then("an informative error message about the length of the name is displayed")
-    public void verifyErrorMessageForNameLength() {
-        opencartUser.checkIfErrorMessageForNameLengthIsDisplayed();
+        opencartUser.closeBrowser();
     }
 
-    @And("the user's name should remain unchanged and not change to {string}")
-    public void verifyUserNameRemainsUnchanged(String wrong_name) {
-        opencartUser.Click_Edit_Account_button();
-        opencartUser.CheckIfFirstNameUnchanged(wrong_name);
-    }
-    @And("User clicks on the 'Edit your account information' button")
-    public void user_click_Edit_your_account_information_button(){
+    /**
+     * Step definition: Navigates the user to the 'My Account Information' page.
+     */
+    @And("And User navigates to the 'My Account Information' page")
+    public void user_click_Edit_your_account_information_button() {
         opencartUser.Click_your_account_information_button();
     }
 
-    @When("User logs out")
-    public void User_logs_out(){
-        opencartUser.logeOut();
-    }
-
-    @And("User logs in again with {string} and {string}")
-    public void User_logs_in_again(String email, String password) {
-        user_is_logged_in_with(email, password);
-    }
-
-    @When("User enters a new last name {string}")
-    public void user_Enter_new_Last_Name(String new_name){
-        opencartUser.writeNewLastName(new_name);
-    }
-    @And("the user should see the updated last name {string} in their Account Information")
-    public void last_name_updated_successfully(String new_name) {
-        opencartUser.Click_Edit_Account_button();
-        opencartUser.CheckIfLastNameChange(new_name);
-    }
-    @When("User doesn't change their name and saves the changes in their Account Information")
-    public void save_without_change(){
-        User_saves_changes_in_Account_Information();
-    }
-
-
-    @Given("User is registered with {string} and {string}")
-    public void RegisterUser(String email, String password) {
-         userIsOnHomePage();
-        try {
-            opencartUser.registerUser(email, password);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public void AdminSignIn(){
+    /**
+     * Initializes the admin session for OpenCart.
+     * Opens the browser and navigates to the OpenCart admin interface.
+     */
+    public void AdminSignIn() {
         adminActuator = new OpenCartAdminActuator();
         adminActuator.InitAdminActuator(webDriver, path);
     }
-    @And( "Admin is logged in with {string} and {string}")
+
+    /**
+     * Step definition: Logs the admin into the OpenCart admin panel with the given username and password.
+     *
+     * @param username The admin username.
+     * @param password The admin password.
+     */
+    @And("Admin is logged in with {string} and {string}")
     public void adminIsLoggedInWith(String username, String password) {
         AdminSignIn();
         try {
@@ -265,6 +125,10 @@ public class StepDefinitions {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Step definition: Navigates the admin to the Customers List in the admin panel.
+     */
     @And("Admin navigates to the Customers List")
     public void adminNavigatesToTheCustomersList() {
         try {
@@ -273,6 +137,12 @@ public class StepDefinitions {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Step definition: Admin selects and deactivates the user with the given email.
+     *
+     * @param email The email of the user to deactivate.
+     */
     @When("Admin selects And deactivates status of user with email {string}")
     public void adminSelectsAndDeactivatesTheUserWithEmail(String email) {
         try {
@@ -282,7 +152,11 @@ public class StepDefinitions {
             throw new RuntimeException(e);
         }
     }
-    @And ("Admin navigates back to the Customers List")
+
+    /**
+     * Step definition: Admin navigates back to the Customers List in the admin panel.
+     */
+    @And("Admin navigates back to the Customers List")
     public void adminNavigatesBackToTheCustomersList() {
         try {
             adminActuator.BackToCustomersList();
@@ -290,21 +164,28 @@ public class StepDefinitions {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Step definition: Verifies that the user with the given email is disabled in the Customers List.
+     *
+     * @param email The email of the user to verify.
+     */
     @Then("when search User with email {string} , it should be disabled")
     public void inAdminPanelUserWithEmailShouldNoLongerBeInListOfActiveUsers(String email) {
         try {
             adminActuator.SearchByEmail(email);
             adminActuator.CheckIfDisabled();
-//            closeBrowser();
+            adminActuator.closeBrowser();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
-    //    @AfterAll
+
+    /**
+     * Closes the browser sessions for both the user and the admin.
+     */
     public void closeBrowser() {
         adminActuator.closeBrowser();
         opencartUser.closeBrowser();
     }
 }
-
-
