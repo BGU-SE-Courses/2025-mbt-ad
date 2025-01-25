@@ -4,7 +4,7 @@ Feature: User Account Management and Administrative Control
   Scenario Outline: User tries to change their name
     Given User opens the website
     And User is logged in with "<Email>" and "<Password>"
-    And User clicks on the 'Edit your account information' button
+    And User navigates to the 'My Account Information' page
     When User enters a new first name "<NewFirstName>"
     And User saves the changes in their Account Information
     Then a confirmation message is displayed
@@ -22,6 +22,7 @@ Feature: User Account Management and Administrative Control
     When  Admin selects And deactivates status of user with email "<Useremail>"
     And   Admin navigates back to the Customers List
     Then  when search User with email "<Useremail>" , it should be disabled
+
     Examples:
       | AdminName            | AdminPassword     | Useremail                |
       | MaorLivni                | 1234              | maorlivni050@gmail.com |
