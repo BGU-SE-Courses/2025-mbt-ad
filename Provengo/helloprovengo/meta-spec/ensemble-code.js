@@ -20,17 +20,8 @@ const MARKED_EVENTS = EVENTS_OF_INTEREST.reduce((acc, event) => {
 }, {});
 
 const GOALS = Object.values(MARKED_EVENTS);
-
-// Generate all pairwise combinations of marked events
 const makeGoals = function () {
-    const pairs = [];
-    const events = Object.values(MARKED_EVENTS); // Use consistent instances
-    for (let i = 0; i < events.length; i++) {
-        for (let j = i + 1; j < events.length; j++) {
-            pairs.push([events[i], events[j]]);
-        }
-    }
-    return pairs;
+    return GOALS.map(event => [event]); // Single-event goals
 };
 
 /**
