@@ -4,7 +4,7 @@ Feature: User Account Management and Administrative Control
   Scenario Outline: User tries to change their name
     Given User opens the website
     And User is logged in with "<Email>" and "<Password>"
-    And And User navigates to the 'My Account Information' page
+    And User navigates to the 'My Account Information' page
     When User enters a new first name "<NewFirstName>"
     And User saves the changes in their Account Information
     Then a confirmation message is displayed

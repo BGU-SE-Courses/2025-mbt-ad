@@ -95,7 +95,7 @@ public class StepDefinitions {
     /**
      * Step definition: Navigates the user to the 'My Account Information' page.
      */
-    @And("And User navigates to the 'My Account Information' page")
+    @And("User navigates to the 'My Account Information' page")
     public void user_click_Edit_your_account_information_button() {
         opencartUser.Click_your_account_information_button();
     }
@@ -181,11 +181,4 @@ public class StepDefinitions {
         }
     }
 
-    /**
-     * Closes the browser sessions for both the user and the admin.
-     */
-    public void closeBrowser() {
-        adminActuator.closeBrowser();
-        opencartUser.closeBrowser();
-    }
 }
