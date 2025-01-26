@@ -1,4 +1,8 @@
 
+// This file contains the actions that are used in the test cases.
+// The actions are written in JavaScript and are used in the test cases.
+
+//this function is used to login as an admin
 function AdminLogIn(session) {
 with(session) {
   writeText(xpaths.AdminLogInWindow.AdminLogInUsernameElement, "admin");
@@ -8,6 +12,7 @@ with(session) {
 }
 }
 
+//this function is used to open the customers list
 function OpenCustomersList(session) {
     with(session) {
   click(xpaths.AdminDashboard.expandCustomers);
@@ -16,7 +21,7 @@ function OpenCustomersList(session) {
 }
 }
 
-
+//this function is used to deactivate the first user in the customers list
 function DeactivateFirstUser(session) {
 with(session) {
  click(xpaths.UserDeactivation.editFirst);
@@ -29,7 +34,7 @@ with(session) {
 }
 }
 
-
+//this function is used to validate the deactivation of the first user
 function DeactivationValidation(session) {
 with(session) {
 click(xpaths.AdminDashboard.ToListCustomers);
@@ -38,6 +43,7 @@ assertText(xpaths.UserDeactivation.successMessage, "Disabled");
 }
 }
 
+//this function is used to reactivate the first user in the customers list
 function AdminActivateUserForSetUpNextTest(session) {
 with(session) {
 //if(xpaths.UserDeactivation.successMessage == "Disabled"){
@@ -52,8 +58,7 @@ with(session) {
 }
 }
 
-
-
+//this function is used to login as a user
 function UserLogIn(session) {
 with(session) {
   click(xpaths.LandPage.MyAccount);
@@ -65,7 +70,7 @@ with(session) {
 }
 }
 
-
+//this function is used to edit the account of the user
 function EditAccount(session) {
 with(session) {
   click(xpaths.UserAccount.EditAccount);

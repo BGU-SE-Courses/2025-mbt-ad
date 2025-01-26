@@ -2,6 +2,8 @@
  *  This is a good place to put common test data, project-wide constants, etc.
  */
 
+//this file contains the data that is used in the test cases.
+//mainely the urls and the xpaths that are used in the test cases.
 const AdminURL = 'http://localhost/opencartsite/admin12345/';
 const UserURL = 'http://localhost/opencartsite/';
 
@@ -43,5 +45,3 @@ const xpaths = {
     successMessage: "//div[contains(@class, 'alert alert-success alert-dismissible')]"
   }
 }
-
-const searchTerm = 'pizza'
