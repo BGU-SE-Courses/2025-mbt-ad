@@ -5,48 +5,54 @@
 // */
 
 bthread('Admin deactivate user', function () {
-//  let s = new SeleniumSession('admin');
-  sync({request: Event("new session - Admin" ) });
-//  s.start(AdminURL , 'chrome');
+  // let s = new SeleniumSession('admin');
+  sync({ request: Ctrl.markEvent("new session - Admin") }); // Marked
+  // s.start(AdminURL , 'chrome');
 
-  sync({request: Event("AdminLogIn")});
-//  AdminLogIn(s);
+  sync({ request: Ctrl.markEvent("AdminLogIn") }); // Marked
+  // AdminLogIn(s);
 
-  sync({request: Event("OpenCustomersList") });
-//  OpenCustomersList(s);
+  sync({ request: Ctrl.markEvent("OpenCustomersList") }); // Marked
+  // OpenCustomersList(s);
 
-  sync({request: Event("FirstUserDeactivated")});//syncing the user deactivation
-//  DeactivateFirstUser(s);
+  sync({ request: Ctrl.markEvent("FirstUserDeactivated") }); // Marked
+  // DeactivateFirstUser(s);
 
-  sync ({request: Event("DeactivationValidation")});
-//  DeactivationValidation(s);
+  sync({ request: Ctrl.markEvent("DeactivationValidation") }); // Marked
+  // DeactivationValidation(s);
 
-sync ({request: Event("ReActivateUserForSetUpNextTestNextTest")});
-//   AdminActivateUserForSetUpNextTest(s);
-sync({request: Event(" close session - Admin" ) });
-//  s.close();
-})
+  sync({ request: Ctrl.markEvent("ReActivateUserForSetUpNextTestNextTest") }); // Marked
+  // AdminActivateUserForSetUpNextTest(s);
+
+  sync({ request: Ctrl.markEvent("close session - Admin") }); // Marked
+  // s.close();
+});
 
 bthread('user changes name', function () {
-//  let s = new SeleniumSession('user');
-  sync({request: Event("new session - User" ) });
-//  s.start(UserURL , 'chrome');
+  // let s = new SeleniumSession('user');
+  sync({ request: Ctrl.markEvent("new session - User") }); // Marked
+  // s.start(UserURL , 'chrome');
 
-  sync({request: Event("UserLogIn")});
-//  UserLogIn(s);
+  sync({ request: Ctrl.markEvent("UserLogIn") }); // Marked
+  // UserLogIn(s);
 
+  sync({ request: Ctrl.markEvent("EditAccount") }); // Marked
+  // EditAccount(s);
 
-//  EditAccount(s);
-  sync({request: Event("EditAccount")});
-//
-    sync({request: Event("close session - User" ) });
-//  s.close();
-})
+  sync({ request: Ctrl.markEvent("close session - User") }); // Marked
+  // s.close();
+});
 
 bthread("Constraint1", function () {
- sync({ waitFor: Event("EditAccount"), block: Event("FirstUserDeactivated") })
-})
+  sync({
+    waitFor: Ctrl.markEvent("EditAccount"),
+    block: Ctrl.markEvent("FirstUserDeactivated")
+  });
+});
 
 bthread("Constraint2", function () {
- sync({ waitFor: Event("close session - User"), block: Event("ReActivateUserForSetUpNextTestNextTest") })
-})
+  sync({
+    waitFor: Ctrl.markEvent("close session - User"),
+    block: Ctrl.markEvent("ReActivateUserForSetUpNextTestNextTest")
+  });
+});
