@@ -7,58 +7,61 @@
 bthread('Admin deactivate user', function () {
 
   let s = new SeleniumSession('admin');
-//open a new session , and sync it with the event "new session - Admin"
-  sync({request: Event("new session - Admin" ) });
+  // Open a new session and sync it with the event "new session - Admin"
+  sync({request: Ctrl.markEvent("new session - Admin")});
   s.start(AdminURL , 'chrome');
 
-//activate the admin user , doing the login , and sync it with the event "AdminLogIn"
-  sync({request: Event("AdminLogIn")});
+  // Activate the admin user, perform login, and sync it with the event "AdminLogIn"
+  sync({request: Ctrl.markEvent("AdminLogIn")});
   AdminLogIn(s);
 
-//open the customers list , and sync it with the event "OpenCustomersList"
-  sync({request: Event("OpenCustomersList") });
+  // Open the customers list and sync it with the event "OpenCustomersList"
+  sync({request: Ctrl.markEvent("OpenCustomersList")});
   OpenCustomersList(s);
 
-//deactivate the first user , and sync it with the event "FirstUserDeactivated"
-  sync({request: Event("FirstUserDeactivated")});//syncing the user deactivation
+  // Deactivate the first user and sync it with the event "FirstUserDeactivated"
+  sync({request: Ctrl.markEvent("FirstUserDeactivated")});
   DeactivateFirstUser(s);
 
-//validate the deactivation , and sync it with the event "DeactivationValidation"
-  sync ({request: Event("DeactivationValidation")});
+  // Validate the deactivation and sync it with the event "DeactivationValidation"
+  sync({request: Ctrl.markEvent("DeactivationValidation")});
   DeactivationValidation(s);
 
-//close the session , and sync it with the event "close session - Admin"
-sync ({request: Event("ReActivateUserForSetUpNextTestNextTest")});
-   AdminActivateUserForSetUpNextTest(s);
-//close the session , and sync it with the event "close session - Admin"
-sync({request: Event(" close session - Admin" ) });
+  // Reactivate the user for the next test setup and sync it with the event "ReActivateUserForSetUpNextTestNextTest"
+  sync({request: Ctrl.markEvent("ReActivateUserForSetUpNextTestNextTest")});
+  AdminActivateUserForSetUpNextTest(s);
+
+  // Close the session and sync it with the event "close session - Admin"
+  sync({request: Ctrl.markEvent("close session - Admin")});
   s.close();
 })
 
 //this story is about the user changing his name
 bthread('user changes name', function () {
   let s = new SeleniumSession('user');
-  //open a new session , and sync it with the event "new session - User"
-  sync({request: Event("new session - User" ) });
+  // Open a new session and sync it with the event "new session - User"
+  sync({request: Ctrl.markEvent("new session - User")});
   s.start(UserURL , 'chrome');
 
-//activate the user , doing the login , and sync it with the event "UserLogIn"
-  sync({request: Event("UserLogIn")});
+  // Activate the user, perform login, and sync it with the event "UserLogIn"
+  sync({request: Ctrl.markEvent("UserLogIn")});
   UserLogIn(s);
 
-//edit the account , and sync it with the event "EditAccount"
+  // Edit the account and sync it with the event "EditAccount"
   EditAccount(s);
-  sync({request: Event("EditAccount")});
+  sync({request: Ctrl.markEvent("EditAccount")});
 
-//close the session , and sync it with the event "close session - User"
-    sync({request: Event("close session - User" ) });
+  // Close the session and sync it with the event "close session - User"
+  sync({request: Ctrl.markEvent("close session - User")});
   s.close();
 })
 
+
+
 bthread("Constraint1", function () {
- sync({ waitFor: Event("EditAccount"), block: Event("FirstUserDeactivated") })
+  sync({ waitFor: Ctrl.markEvent("EditAccount"), block: Ctrl.markEvent("FirstUserDeactivated") });
 })
 
 bthread("Constraint2", function () {
- sync({ waitFor: Event("close session - User"), block: Event("ReActivateUserForSetUpNextTestNextTest") })
+  sync({ waitFor: Ctrl.markEvent("close session - User"), block: Ctrl.markEvent("ReActivateUserForSetUpNextTestNextTest") });
 })
