@@ -47,7 +47,18 @@ const userEvents = [
  //const GOALS = Object.values(MARKED_EVENTS);
 
 
-
+/**
+ *  These are the events we are tracking for the domain testing. they were choosen because they are the ones that
+ *  are probable to have side effects on the 'server' and relust in two users affecting each other
+ *     const selectedAdminEvents = [
+ *         "AdminLogIn",
+ *         "OpenCustomersList"
+ *     ];
+ *     const selectedUserEvents = [
+ *         "UserLogIn",
+ *         "EditAccount",
+ *     ];
+ */
 
 /**
  * Generates pairs of events between user and admin events in both orders.
